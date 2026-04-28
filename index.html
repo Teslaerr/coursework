@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- КЛЮЧЕВОЙ БЛОК: favicon (путь к иконке сайта, замените на свой файл) -->
+  <link rel="icon" href="images/kiss.png" type="image/x-icon">
+  <title>CUT NOIR — Портфолио фотографа</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<!-- КЛЮЧЕВОЙ БЛОК: ШАПКА САЙТА (ЛОГОТИП + НАВИГАЦИЯ) -->
+<header>
+  <div class="logo"><a href="index.html">CUT NOIR</a></div>
+  <nav>
+    <a href="contact.html">[Связаться со мной]</a>
+    <a href="terms.html">[Условия]</a>
+    <a href="ABOUT.html">[Обо мне]</a>
+  </nav>
+</header>
+
+<!-- КЛЮЧЕВОЙ БЛОК: ГЕРОЙ / ЭКРАН-ЗАСТАВКА С ГЛАВНЫМ ТЕКСТОМ -->
+<section class="hero">
+  <div>
+    <h1>КАТ НУАР</h1>
+    <p>ФОТО ПРОПИТАННЫЕ БЛЮЗОМ</p>
+  </div>
+</section>
+
+<!-- КЛЮЧЕВОЙ БЛОК: СЕКЦИЯ "ОБО МНЕ" С ФОТОГРАФИЕЙ И ТЕКСТОМ -->
+<section class="about-section">
+  <div class="about-photo">
+    <img src="images/about.jpg" alt="О фотографе">
+  </div>
+  <div class="about-text">
+    <h2>ОБО МНЕ</h2>
+    <p>Я — фотограф жанра ретро. Мои снимки — это не просто фото, а история, рассказанная через свет и тень.</p>
+    <p>7 лет опыта, 150+ довольных клиентов. Работаю по всей России.</p>
+    <p>Выбери категорию ниже, чтобы посмотреть мои работы.</p>
+  </div>
+</section>
+
+<!-- КЛЮЧЕВОЙ БЛОК: ОСНОВНОЙ КОНТЕНТ — СЕТКА КАТЕГОРИЙ СЪЁМОК (ГЕНЕРИРУЕТСЯ ДИНАМИЧЕСКИ ЧЕРЕЗ JS) -->
+<div class="page">
+  <div class="page-header"><h1>КАТЕГОРИИ СЪЁМОК</h1></div>
+  <div class="categories-grid" id="categoriesGrid"></div>
+</div>
+
+<!-- КЛЮЧЕВОЙ БЛОК: ПОДВАЛ САЙТА (КОПИРАЙТ, КОНТАКТЫ) -->
+<footer>
+  <div class="footer-content">
+    <p>© 2026 CATNOIR</p>
+    <p>hello@catnoir.ru | +7 (999) 123-45-67</p>
+  </div>
+</footer>
+
+<!-- КЛЮЧЕВОЙ БЛОК: СКРИПТ ДЛЯ ОТРИСОВКИ КАРТОЧЕК КАТЕГОРИЙ И ПОДСВЕТКИ АКТИВНОЙ СТРАНИЦЫ -->
+<script>
+  // МАССИВ С КАТЕГОРИЯМИ — ТУТ ТЫ МЕНЯЕШЬ ФОТО И ССЫЛКИ
+  const galleryImages = [
+    { 
+      src: "images/1.jpg", 
+      title: "ПОРТРЕТ", 
+      price: "от 8 000 ₽",
+      link: "portrait.html"      // ССЫЛКА НА HTML ФАЙЛ
+    },
+    { 
+      src: "images/car.jpg", 
+      title: "В МАШИНЕ", 
+      price: "от 15 000 ₽",
+      link: "fashion.html"
+    },
+    { 
+      src: "images/street.jpg", 
+      title: "УЛИЧНАЯ", 
+      price: "от 6 000 ₽",
+      link: "street.html"
+    },
+    { 
+      src: "images/studio.jpg", 
+      title: "СТУДИЙНОЕ", 
+      price: "от 10 000 ₽",
+      link: "studio.html"
+    },
+    { 
+      src: "images/disco.jpg", 
+      title: "ДИСКО", 
+      price: "от 12 000 ₽",
+      link: "event.html"
+    },
+    { 
+      src: "images/vinyl.jpg", 
+      title: "ВИНИЛ", 
+      price: "от 20 000 ₽",
+      link: "art.html"
+    }
+  ];
+
+  // ГЕНЕРАЦИЯ КАРТОЧЕК КАТЕГОРИЙ
+  function renderCategories() {
+    const container = document.getElementById('categoriesGrid');
+    if (!container) return;
+    
+    container.innerHTML = '';
+    
+    galleryImages.forEach(category => {
+      const card = document.createElement('a');
+      card.className = 'category-card';
+      card.href = category.link;  // ССЫЛКА НА HTML ФАЙЛ
+      
+      card.innerHTML = `
+        <img src="${category.src}" alt="${category.title}" onerror="this.src='https://placehold.co/600x400/222/FFF?text=NO+IMAGE'">
+        <div class="category-overlay">
+          <h3>${category.title}</h3>
+          <p>${category.price} →</p>
+        </div>
+      `;
+      
+      container.appendChild(card);
+    });
+  }
+
+  // ПОДСВЕТКА АКТИВНОЙ СТРАНИЦЫ В МЕНЮ
+  document.addEventListener('DOMContentLoaded', () => {
+    renderCategories();
+    
+    const currentPage = window.location.pathname.split('/').pop() || 'index.html';
+    document.querySelectorAll('nav a').forEach(link => {
+      const href = link.getAttribute('href');
+      if (href === currentPage) {
+        link.classList.add('active');
+      }
+    });
+  });
+</script>
+
+</body>
+</html>
